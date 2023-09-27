@@ -19,3 +19,6 @@ class TestLongestPeak(unittest.TestCase):
     def test_not_symmetrical_peak(self):
         self.assertEqual(length_peak_sequence([1, 3, 5, 7, 4, 2, 9, 8]), 6)
         self.assertEqual(length_peak_sequence([8, 9, 2, 4, 7, 5, 3, 1]), 6)
+
+if __name__ == '__main__':
+    unittest.main()
