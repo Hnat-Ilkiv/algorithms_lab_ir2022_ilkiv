@@ -1,4 +1,6 @@
 import unittest
+from module.length_peak_sequence import length_peak_sequence
+
 
 class TestLongestPeak(unittest.TestCase):
     def test_sorted_ascending(self):
