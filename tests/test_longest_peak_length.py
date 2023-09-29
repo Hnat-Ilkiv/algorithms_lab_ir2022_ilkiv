@@ -1,7 +1,6 @@
 import unittest
 from module.length_peak_sequence import length_peak_sequence
 
-
 class TestLongestPeak(unittest.TestCase):
     def test_sorted_ascending(self):
         self.assertEqual(length_peak_sequence([1, 2, 3, 4, 5]), 0)
