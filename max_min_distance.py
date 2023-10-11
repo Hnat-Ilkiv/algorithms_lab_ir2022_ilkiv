@@ -1,5 +1,5 @@
-def max_min_distance(N, C, free_sections):
-    free_sections.sort()
+def max_min_distance(N: int, C: int, free_sections: list[int]) -> int:
+    free_sections = merge_sort(free_sections)
     
     low = 0
     
@@ -18,7 +18,7 @@ def max_min_distance(N, C, free_sections):
 
     return result
 
-def can_place_cows(mid, N, C, free_sections):
+def can_place_cows(mid: int, N: int, C: int, free_sections: list[int]) -> bool:
     cows_placed = 1
     
     prev_stall = free_sections[0]
@@ -31,9 +31,33 @@ def can_place_cows(mid, N, C, free_sections):
                 return True
     return False
 
+def merge_sort(arr: list[int]) -> list[int]:
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
+    left_half = merge_sort(left_half)
+    right_half = merge_sort(right_half)
+    return merge(left_half, right_half)
+
+def merge(left: list[int], right: list[int]) -> list[int]:
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
 if __name__ == "__main__":
     N = 5
-    C = 2
+    C = 3
     free_sections = [1, 2, 8, 4, 9]
     result = max_min_distance(N, C, free_sections)
     print(result)
