@@ -22,25 +22,11 @@ def get_path(node):
     queue = [(node, 1, [node])]
 
     while queue:
-        # print(f"\tЧерга старт: {queue}")
         current, depth, path = queue.pop(0)
-        # print(f"\t\tЕлемент: {current}, Глибина :{depth}, Шлях: {path};")
         if current.left:
-            # print(f"\t\tLeft:")
-            # path.append(current.left)
-            # print(f"\t\t\tpath = {path}")
             queue.append((current.left, depth + 1, path + [current.left]))
-            # print(f"\t\t\tqueue = {queue}")
-            # print(f"\t\tpath.pop = {path.pop()}")
-        # print(f"\t\tЧерга проміжок: {queue}")
         if current.right:
-            # print(f"\t\tRight:")
-            # path.append(current.right)
-            # print(f"\t\t\tpath = {path}")
             queue.append((current.right, depth + 1, path + [current.right]))
-            # print(f"\t\t\tqueue = {queue}")
-            # print(f"\t\tpath.pop = {path.pop()}")
-        # print(f"\t\tЧерга фініш: {queue}")
     return path
 
 
@@ -79,7 +65,6 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
 
 
 if __name__ == "__main__":
-    # Створення тестового бінарного дерева
     root = BinaryTree(1)
     root.left = BinaryTree(3)
     root.right = BinaryTree(2)
