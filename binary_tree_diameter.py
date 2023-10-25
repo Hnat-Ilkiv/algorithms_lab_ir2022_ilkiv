@@ -1,24 +1,6 @@
 from binary_tree import BinaryTree
 from display_ascii_tree import display_ascii_tree_horizontally
 
-def max_depth_recursive(node):
-    if not node:
-        return 0
-    return 1 + max(max_depth_recursive(node.left), max_depth_recursive(node.right))
-
-def binary_tree_diameter_recursive(tree: BinaryTree) -> int:
-    if not tree:
-        return 0
-
-    left_height = max_depth_recursive(tree.left)
-    right_height = max_depth_recursive(tree.right)
-
-    left_diameter = binary_tree_diameter_recursive(tree.left)
-    right_diameter = binary_tree_diameter_recursive(tree.right)
-
-    return max(left_height + right_height, max(left_diameter, right_diameter))
-
-
 def max_depth(node):
     if not node:
         return 0
