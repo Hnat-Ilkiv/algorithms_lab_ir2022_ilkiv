@@ -31,8 +31,8 @@ def max_path(node):
 
 def display_path_diameter(node):
     root = [node]
-    left = max_path(node.left)[::-1]
-    right = max_path(node.right)
+    left = max_path(node.left)[::-1] if node.left else []
+    right = max_path(node.right) if node.right else []
     path = left + root + right
     element_list = [element.value for element in path]
     display_path = " -> ".join(map(str,element_list))
