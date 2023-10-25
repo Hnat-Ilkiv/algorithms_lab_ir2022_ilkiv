@@ -15,7 +15,7 @@ def max_depth(node):
             queue.append((current.right, depth + 1))
     return depth
 
-def get_path(node):
+def max_path(node):
     if not node:
         return 0
 
@@ -29,6 +29,15 @@ def get_path(node):
             queue.append((current.right, depth + 1, path + [current.right]))
     return path
 
+def display_path_diameter(node):
+    root = [node]
+    left = max_path(node.left)[::-1]
+    right = max_path(node.right)
+    path = left + root + right
+    element_list = [element.value for element in path]
+    display_path = " -> ".join(map(str,element_list))
+
+    print(f"Branch diameter: {display_path}")
 
 
 def binary_tree_diameter(tree: BinaryTree) -> int:
@@ -41,12 +50,12 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
 
     while queue:
         node = queue.pop(0)
-        get_path(node)
 
         left_height = max_depth(node.left)
         right_height = max_depth(node.right)
 
         current_diameter = left_height + right_height
+
         if current_diameter > diameter:
             path_node = node
 
@@ -57,8 +66,8 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
         if node.right:
             queue.append(node.right)
 
-    print(path_node)
-    print(f"Binary branch: {get_path(path_node.left)[::-1] + [path_node] + get_path(path_node.right)}")
+    print(f"Top diameter: {path_node.value}")
+    display_path_diameter(path_node)
 
     return diameter
 
