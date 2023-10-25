@@ -90,6 +90,7 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
             queue.append(node.right)
 
     print(path_node)
+    print(f"Binary branch: {get_path(path_node.left)[::-1] + [path_node] + get_path(path_node.right)}")
 
     return diameter
 
