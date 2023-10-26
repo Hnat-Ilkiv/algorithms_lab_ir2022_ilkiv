@@ -1,77 +1,49 @@
 from binary_tree import BinaryTree
 from display_ascii_tree import display_ascii_tree_horizontally
 
-def max_depth(node):
-    if not node:
-        return 0
-
-    queue = [(node, 1)]
-
-    while queue:
-        current, depth = queue.pop(0)
-        if current.left:
-            queue.append((current.left, depth + 1))
-        if current.right:
-            queue.append((current.right, depth + 1))
-    return depth
-
-def max_path(node):
-    if not node:
-        return 0
-
-    queue = [(node, 1, [node])]
-
-    while queue:
-        current, depth, path = queue.pop(0)
-        if current.left:
-            queue.append((current.left, depth + 1, path + [current.left]))
-        if current.right:
-            queue.append((current.right, depth + 1, path + [current.right]))
-    return path
-
-def display_path_diameter(node):
-    root = [node]
-    left = max_path(node.left)[::-1] if node.left else []
-    right = max_path(node.right) if node.right else []
+def display_path_diameter(path_to_node1, path_to_node2):
+    i = 0
+    while i < len(path_to_node1) and i < len(path_to_node2) and path_to_node1[i] == path_to_node2[i]:
+        i += 1
+    root = [path_to_node1[i-1]]
+    left = path_to_node1[:i-1:-1]
+    right = path_to_node2[i:]
     path = left + root + right
     element_list = [element.value for element in path]
     display_path = " -> ".join(map(str,element_list))
 
     print(f"Branch diameter: {display_path}")
 
+def find_path_to_node(node, target, path):
+    if node is None:
+        return False
 
-def binary_tree_diameter(tree: BinaryTree) -> int:
-    if not tree:
-        return 0
+    path.append(node)
 
-    diameter = 0
-    path_node = None
-    queue = [tree]
+    if node.value == target:
+        return True
 
-    while queue:
-        node = queue.pop(0)
+    if (node.left and find_path_to_node(node.left, target, path)) or (node.right and find_path_to_node(node.right, target, path)):
+        return True
 
-        left_height = max_depth(node.left)
-        right_height = max_depth(node.right)
+    path.pop()
+    return False
 
-        current_diameter = left_height + right_height
+def find_path_length(root, node1, node2):
+    path_to_node1 = []
+    path_to_node2 = []
 
-        if current_diameter > diameter:
-            path_node = node
+    if not find_path_to_node(root, node1, path_to_node1) or not find_path_to_node(root, node2, path_to_node2):
+        return -1
 
-        diameter = max(diameter, current_diameter)
+    if path_to_node1[-1].left is None and path_to_node1[-1].right is None and path_to_node2[-1].left is None and path_to_node2[-1].right is None:
+        i = 0
+        while i < len(path_to_node1) and i < len(path_to_node2) and path_to_node1[i] == path_to_node2[i]:
+            i += 1
 
-        if node.left:
-            queue.append(node.left)
-        if node.right:
-            queue.append(node.right)
-
-    print(f"Top diameter: {path_node.value}")
-    display_path_diameter(path_node)
-
-    return diameter
-
-
+        display_path_diameter(path_to_node1, path_to_node2)
+        return len(path_to_node1) + len(path_to_node2) - 2 * i
+    return -1
 
 if __name__ == "__main__":
     root = BinaryTree(1)
@@ -87,4 +59,4 @@ if __name__ == "__main__":
     print("Display binary tree:")
     display_ascii_tree_horizontally(root)
 
-    print(f"Binary tree diameter: {binary_tree_diameter(root)}")
+    print(f"Binary tree diameter: {find_path_length(root, 2, 9)}")
