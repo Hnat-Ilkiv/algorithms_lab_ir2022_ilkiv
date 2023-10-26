@@ -54,7 +54,7 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
         left_height = max_depth(node.left)
         right_height = max_depth(node.right)
 
-        if left_height != 0 and right_height:
+        if left_height != 0 and right_height != 0:
             current_diameter = left_height + right_height
 
             if current_diameter > diameter:
