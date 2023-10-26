@@ -54,17 +54,21 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
         left_height = max_depth(node.left)
         right_height = max_depth(node.right)
 
-        current_diameter = left_height + right_height
+        if left_height != 0 and right_height:
+            current_diameter = left_height + right_height
 
-        if current_diameter > diameter:
-            path_node = node
+            if current_diameter > diameter:
+                path_node = node
 
-        diameter = max(diameter, current_diameter)
+            diameter = max(diameter, current_diameter)
 
         if node.left:
             queue.append(node.left)
         if node.right:
             queue.append(node.right)
+
+    if path_node is None:
+        return 0
 
     print(f"Top diameter: {path_node.value}")
     display_path_diameter(path_node)
@@ -76,13 +80,13 @@ def binary_tree_diameter(tree: BinaryTree) -> int:
 if __name__ == "__main__":
     root = BinaryTree(1)
     root.left = BinaryTree(3)
-    root.right = BinaryTree(2)
+    # root.right = BinaryTree(2)
     root.left.left = BinaryTree(7)
-    root.left.right = BinaryTree(4)
+    # root.left.right = BinaryTree(4)
     root.left.left.left = BinaryTree(8)
     root.left.left.left.left = BinaryTree(9)
-    root.left.right.right = BinaryTree(5)
-    root.left.right.right.right = BinaryTree(6)
+    # root.left.right.right = BinaryTree(5)
+    # root.left.right.right.right = BinaryTree(6)
 
     print("Display binary tree:")
     display_ascii_tree_horizontally(root)
