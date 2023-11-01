@@ -6,30 +6,53 @@ def check_balanced(node):
         return 0
 
     left_height = check_balanced(node.left)
-    # print(node,"\tleft", left_height)
     if left_height == -1:
         return -1
 
     right_height = check_balanced(node.right)
-    # print(node,"\tright", right_height)
     if right_height == -1:
         return -1
-    # print(node, "\t\tbal", left_height - right_height)
+
     if abs(left_height - right_height) > 1:
         return -1
-    # print(node,"\t\t\treturn", max(left_height, right_height) + 1)
+
     return max(left_height, right_height) + 1
 
 def is_tree_balanced(node: BinaryTree) -> bool:
     return check_balanced(node) != -1
 
 
-root = BinaryTree(3)
-root.left = BinaryTree(9)
-root.right = BinaryTree(20)
-root.right.left = BinaryTree(15)
-root.right.right = BinaryTree(7)
+root = BinaryTree(50)
+root.left = BinaryTree(17)
+root.right = BinaryTree(76)
+root.right.left = BinaryTree(54)
+root.right.left.right = BinaryTree(72)
+root.right.left.right.left = BinaryTree(67)
+
+root.left.left = BinaryTree(9)
+root.left.right = BinaryTree(23)
+root.left.left.right = BinaryTree(14)
+root.left.left.right.left = BinaryTree(12)
+root.left.right.left = BinaryTree(19)
 
 display_ascii_tree_horizontally(root)
 
 print(is_tree_balanced(root))
+
+root1 = BinaryTree(50)
+root1.left = BinaryTree(17)
+
+root1.right = BinaryTree(72)
+root1.right.left = BinaryTree(54)
+root1.right.left.right = BinaryTree(67)
+root1.right.right = BinaryTree(76)
+
+root1.left.left = BinaryTree(12)
+root1.left.right = BinaryTree(23)
+root1.left.left.right = BinaryTree(14)
+root1.left.left.left = BinaryTree(9)
+root1.left.right.left = BinaryTree(19)
+
+display_ascii_tree_horizontally(root1)
+
+print(is_tree_balanced(root1))
