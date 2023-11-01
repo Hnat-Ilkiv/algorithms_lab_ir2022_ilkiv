@@ -2,11 +2,14 @@ def flood_fill(matrix_height, matrix_width, matrix, start, target_color, replace
     height = len(matrix)
     width = len(matrix[0])
 
-    if (matrix_height != height or matrix_width != width):
-        print(height, width)
-        print(matrix_height, matrix_width)
-        print (f"Height && Width Error")
-        return matrix
+    if matrix_height != height or matrix_width != width:
+        raise ValueError("The height or width is incorrect")
+
+    if start[0] < 0 or start[0] > height or start[1] < 0 or start[1] > width:
+        raise IndexError("The coordinates of the initial node are outside the array")
+
+    if matrix[start[0]][start[1]] != target_color:
+        raise ValueError("The original color is not correct")
 
     stack = [start]
 
@@ -20,27 +23,27 @@ def flood_fill(matrix_height, matrix_width, matrix, start, target_color, replace
             stack.append((x, y - 1))
 
 def read_input(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         lines = f.readlines()
-        height, width = map(int, lines[0].strip().split(','))
-        start = tuple(map(int, lines[1].strip().split(',')))
-        target_color = lines[2].strip().strip('‘’')
-        matrix = [list(row.strip().strip('[\'\'],').split('\', \'')) for row in lines[3:]]
+        height, width = map(int, lines[0].strip().split(","))
+        start = tuple(map(int, lines[1].strip().split(",")))
+        target_color = lines[2].strip().strip("‘’")
+        matrix = [list(row.strip().strip("['],").split("', '")) for row in lines[3:]]
         return (height, width, start, target_color, matrix)
 
 def write_output(file_path, matrix):
-    with open(file_path, 'w') as f:
+    with open(file_path, "w") as f:
         for row in matrix:
-            f.write('[\'' + '\', \''.join(row) + '\']\n')
+            f.write("['" + "', '".join(row) + "']\n")
 
-if __name__ == '__main__':
-    input_file = 'input.txt'
-    output_file = 'output.txt'
+if __name__ == "__main__":
+    input_file = "input.txt"
+    output_file = "output.txt"
 
     data = read_input(input_file)
     height, width, start, target_color, matrix = data
 
-    replace_color = 'C'  # Вказуємо колір для заміни
+    replace_color = "C"  # Вказуємо колір для заміни
 
     # print(height, width)
     # print(start)
