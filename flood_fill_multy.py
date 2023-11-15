@@ -1,11 +1,6 @@
-"""
-=======================================================================
-=                     Flood fill application                          =
-=======================================================================
-"""
+import multiprocessing
 
-def bfs(matrix, start, replace_color, rows, cols):
-    visited = [[False for _ in range(cols)] for _ in range(rows)]
+def bfs(matrix, start, replace_color, rows, cols, visited):
     queue = [start]
     replace_node = matrix[start[0]][start[1]]
 
@@ -27,7 +22,8 @@ def bfs(matrix, start, replace_color, rows, cols):
 def flood_fill(matrix, start, replace_color, rows, cols):
     x, y = start
     if matrix[x][y] != replace_color:
-        bfs(matrix, start, replace_color, rows, cols)
+        visited = [[False for _ in range(cols)] for _ in range(rows)]
+        bfs(matrix, start, replace_color, rows, cols, visited)
 
 def read_input(file_path):
     with open(file_path, "r") as f:
@@ -44,28 +40,28 @@ def write_output(file_path, matrix):
         for row in matrix:
             f.write("['" + "', '".join(row) + "']\n")
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     import time
 
     input_file = "big_input.txt"
     output_file = "output.txt"
 
-    print(f"Start reading ...")
+    print(f"Start reading & saveing matrix and other data ...")
     start_time = time.time()
-    data = read_input(input_file)
+    height, width, start, replace_color, matrix = read_input(input_file)
     end_time = time.time()
-    print(f"Time: {end_time - start_time}\nFinish reading ...\n")
-
-    print(f"Start saveing matrix and other data ...")
-    start_time = time.time()
-    height, width, start, replace_color, matrix = data
-    end_time = time.time()
-    print(f"Time: {end_time - start_time}\nFinish saveing matrix and other data ...\n")
+    print(f"Time: {end_time - start_time}\nFinish reading & saveing matrix and other data ...\n")
 
     print(f"Start working ...")
     start_time = time.time()
-    flood_fill(matrix, start, replace_color, height, width)
+    processes = []
+    for i in range(multiprocessing.cpu_count()):
+        p = multiprocessing.Process(target=flood_fill, args=(matrix, start, replace_color, height, width))
+        processes.append(p)
+        p.start()
+
+    for process in processes:
+        process.join()
     end_time = time.time()
     print(f"Time: {end_time - start_time}\nFinish working ... \n")
 
