@@ -1,4 +1,4 @@
-from main import find_unreachable
+from src.main import find_unreachable
 import unittest
 
 class TestIsConnected(unittest.TestCase):
