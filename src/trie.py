@@ -32,9 +32,10 @@ class Trie:
             node = node.children[char]
         return True
 
+
 if __name__ == "__main__":
     trie = Trie()
     trie.insert("apple")
     print(trie.search("apple"))  # True
-    print(trie.search("app"))    # False
+    print(trie.search("app"))  # False
     print(trie.starts_with_prefix("app"))  # True

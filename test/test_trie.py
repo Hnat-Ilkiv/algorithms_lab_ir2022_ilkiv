@@ -1,6 +1,7 @@
 import unittest
 from src.trie import Trie
 
+
 class TestTrieMethods(unittest.TestCase):
     def test_insert_and_search(self):
         trie = Trie()
@@ -20,6 +21,6 @@ class TestTrieMethods(unittest.TestCase):
         self.assertFalse(trie.search("word"))
         self.assertFalse(trie.starts_with_prefix("pre"))
 
-if __name__ == '__main__':
-    unittest.main()
 
+if __name__ == "__main__":
+    unittest.main()
