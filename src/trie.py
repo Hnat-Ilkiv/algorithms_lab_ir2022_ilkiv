@@ -5,6 +5,7 @@ Author: Hnat Ilkiv
 Date: 2023-11-28
 """
 
+
 class TrieNode:
     """
     Represents a node in the Trie.
@@ -70,10 +71,91 @@ class Trie:
             node = node.children[char]
         return True
 
+    def prediction_words_with_prefix(self, prefix):
+        """
+        Get a list of words that can be obtained from the given prefix without using recursion.
+
+        :param prefix: The prefix to use for predictions.
+        :return: A list of words that can be obtained from the given prefix.
+        """
+        node = self.root
+
+        for char in prefix:
+            if char not in node.children:
+                return []
+            node = node.children[char]
+
+        stack = [(node, prefix)]
+        words = []
+
+        while stack:
+            current_node, current_prefix = stack.pop()
+
+            if current_node.is_end_of_word:
+                words.append(current_prefix)
+
+            for char, child_node in current_node.children.items():
+                stack.append((child_node, current_prefix + char))
+
+        return words
+
+
+def print_trie_structure(node, prefix="", is_last=True):
+    """
+    Print the structure of the Trie.
+
+    :param node: The current Trie node.
+    :param prefix: The current prefix formed by traversing the Trie.
+    :param is_last: True if the current node is the last child of its parent, False otherwise.
+    """
+    if prefix:
+        indentation = "".join(
+            char if char in [" ", "│"] else "" for char in prefix
+        )
+        print(f"{indentation}{'└─ ' if is_last else '├─ '}{prefix[-1]}")
+
+    else:
+        print("Root")
+
+    children_count = len(node.children)
+    for i, (char, child_node) in enumerate(node.children.items()):
+        is_last_child = i == children_count - 1
+        print_trie_structure(
+            child_node,
+            prefix + ("   " if is_last else "│  ") + char,
+            is_last_child,
+        )
+
 
 if __name__ == "__main__":
     trie = Trie()
-    trie.insert("apple")
-    print(trie.search("apple"))  # True
-    print(trie.search("app"))  # False
-    print(trie.starts_with_prefix("app"))  # True
+    words = [
+        "able",
+        "about",
+        "above",
+        "accept",
+        "account",
+        "across",
+        "act",
+        "action",
+        "activity",
+        "add",
+        "address",
+        "after",
+        "afternoon",
+        "again",
+        "against",
+        "age",
+        "ago",
+        "agree",
+    ]
+    words += ["tree", "trie", "true", "troops"]
+
+    for word in words:
+        trie.insert(word)
+
+    # print(trie.prediction_words_with_prefix("ab"))
+    # print(trie.prediction_words_with_prefix("tr"))
+
+    print("Trie Structure:")
+    print_trie_structure(trie.root)
