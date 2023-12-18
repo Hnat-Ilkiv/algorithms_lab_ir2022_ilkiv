@@ -38,7 +38,7 @@ class TestCanPlaceCows(unittest.TestCase):
         N = 5
         C = 3
         free_sections = [1, 2, 4, 8, 9]
-        result = can_place_cows(mid, N, C, free_sections)
+        result = can_place_cows(mid, N, C, free_sections, [])
         self.assertTrue(result)
 
     def test_cannot_place_cows(self):
@@ -46,7 +46,7 @@ class TestCanPlaceCows(unittest.TestCase):
         N = 5
         C = 3
         free_sections = [1, 2, 4, 8, 9]
-        result = can_place_cows(mid, N, C, free_sections)
+        result = can_place_cows(mid, N, C, free_sections, [])
         self.assertFalse(result)
 
 if __name__ == '__main__':
