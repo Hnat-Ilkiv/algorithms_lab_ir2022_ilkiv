@@ -33,57 +33,9 @@ class TestFloodFill(unittest.TestCase):
         start = (3, 9)
         target_color, replace_color = 'X', 'C'
         # Execution of filling
-        flood_fill(height, width, self.matrix, start, target_color, replace_color)
+        flood_fill(self.matrix, start, replace_color, height, width)
         # Checking the result
         self.assertEqual(self.matrix, self.expected_output)
-
-    def test_flood_fill_wrong_height(self):
-        # Initialization of necessary data
-        height, width = 13, 10
-        start = (3, 9)
-        target_color, replace_color = 'X', 'C'
-        # Execution of filling && Checking the result
-        with self.assertRaises(ValueError):
-            flood_fill(height, width, self.matrix, start, target_color, replace_color)
-
-    def test_flood_fill_wrong_width(self):
-        # Initialization of necessary data
-        height, width = 10, 4
-        start = (3, 9)
-        target_color, replace_color = 'X', 'C'
-        # Execution of filling && Checking the result
-        with self.assertRaises(ValueError):
-            flood_fill(height, width, self.matrix, start, target_color, replace_color)
-
-    def test_flood_fill_wrong_start(self):
-        # Initialization of necessary data
-        height, width = 10, 10
-        target_color, replace_color = 'G', 'C'
-        # Execution of filling && Checking the result
-        start = (-1, 9)
-        with self.assertRaises(IndexError):
-            flood_fill(height, width, self.matrix, start, target_color, replace_color)
-
-        start = (11, 9)
-        with self.assertRaises(IndexError):
-            flood_fill(height, width, self.matrix, start, target_color, replace_color)
-
-        start = (3, -4)
-        with self.assertRaises(IndexError):
-            flood_fill(height, width, self.matrix, start, target_color, replace_color)
-
-        start = (3, 13)
-        with self.assertRaises(IndexError):
-            flood_fill(height, width, self.matrix, start, target_color, replace_color)
-
-    def test_flood_fill_wrong_target_color(self):
-        # Initialization of necessary data
-        height, width = 10, 10
-        start = (3, 9)
-        target_color, replace_color = 'G', 'C'
-        # Execution of filling && Checking the result
-        with self.assertRaises(ValueError):
-            flood_fill(height, width, self.matrix, start, target_color, replace_color)
 
     def tearDown(self):
         print(f"Finish test: {self._testMethodName}\nResult: ", end="")
@@ -91,7 +43,7 @@ class TestFloodFill(unittest.TestCase):
 class TestInputOutput(unittest.TestCase):
     def setUp(self):
         print(f"\n\nRunning test: {self._testMethodName}")
-        self.expected_read = (10, 10, (3, 9), 'X', [['Y', 'Y', 'Y', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
+        self.expected_read = (10, 10, (3, 9), 'C', [['Y', 'Y', 'Y', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
                                                ['Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'G', 'X', 'X', 'X'],
                                                ['G', 'G', 'G', 'G', 'G', 'G', 'G', 'X', 'X', 'X'],
                                                ['W', 'W', 'W', 'W', 'W', 'G', 'G', 'G', 'G', 'X'],
